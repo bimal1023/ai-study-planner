@@ -4,7 +4,13 @@ from dotenv import load_dotenv
 from openai import OpenAI
 
 load_dotenv()
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+try:
+    openai_api_key = st.secrets["OPENAI_API_KEY"]
+except Exception:
+    openai_api_key = os.getenv("OPENAI_API_KEY")
+
+client = OpenAI(api_key=openai_api_key)
 
 if "study_plan" not in st.session_state:
     st.session_state.study_plan = ""
